@@ -1242,7 +1242,7 @@ pub fn open_session_bytes(e: &mut Engine, name: &str, bytes: &[u8]) -> Result<Ve
         read_bundle(bytes)?
     } else {
         (
-            String::from_utf8(bytes.to_vec()).map_err(|_| EngineError::Io(format!("{name}: not a SoundCraft session")))?,
+            String::from_utf8(bytes.to_vec()).map_err(|_| EngineError::Io(format!("{name}: not a al7an session")))?,
             std::collections::HashMap::new(),
         )
     };

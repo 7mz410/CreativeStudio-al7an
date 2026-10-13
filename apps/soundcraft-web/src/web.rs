@@ -49,7 +49,7 @@ pub fn start() {
         if let Some(el) = document.get_element_by_id(LOADING_ID) {
             match result {
                 Ok(()) => el.remove(),
-                Err(e) => el.set_inner_html(&format!("<p>SoundCraft failed to start: {e:?}</p><p>A browser with WebGPU or WebGL2 is required.</p>")),
+                Err(e) => el.set_inner_html(&format!("<p>al7an failed to start: {e:?}</p><p>A browser with WebGPU or WebGL2 is required.</p>")),
             }
         }
     });
@@ -97,7 +97,7 @@ impl Purpose {
 
     fn filter(self) -> (&'static str, &'static [&'static str]) {
         match self {
-            Self::Session => ("SoundCraft Session", SESSION_EXTS),
+            Self::Session => ("al7an Session", SESSION_EXTS),
             Self::Audio => ("Audio", AUDIO_EXTS),
             Self::Midi => ("MIDI", MIDI_EXTS),
         }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <title>SoundCraft</title>
+  <title>al7an</title>
   <link data-trunk rel="icon" type="image/png" href="../../assets/app-icon/hicolor/64x64/apps/ai.storyteller.soundcraft.png" />
   <link data-trunk rel="rust" data-bin="soundcraft-web" data-wasm-opt="z" data-weak-refs />
   <style>
@@ -11,7 +11,40 @@
     #soundcraft_canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     #soundcraft_loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       color: #b8b8b8; font: 14px system-ui, sans-serif; pointer-events: none; }
+  
+    /* Creative Studio loading screen: the flying star */
+    .ss-scene { position: relative; width: 300px; height: 230px; --c: #eb1b3c; }
+    .ss-shoe { position: absolute; width: 96px; left: 50%; top: 30px; margin-left: -48px; transform-origin: 50% 55%;
+      animation: ss-fly 2.4s cubic-bezier(.3,.1,.3,1) infinite; }
+    @keyframes ss-fly {
+      0% { transform: translate(200px, 120px) rotate(0deg) scale(.6); opacity: 0; }
+      8% { opacity: 1; }
+      45% { transform: translate(30px, -50px) rotate(-540deg) scale(1); }
+      62% { transform: translate(0, 70px) rotate(-760deg) scale(1); }
+      67% { transform: translate(0, 70px) rotate(-720deg) scale(1.15, .8); }
+      74% { transform: translate(0, 40px) rotate(-725deg) scale(.95, 1.05); }
+      80%, 92% { transform: translate(0, 70px) rotate(-720deg) scale(1); opacity: 1; }
+      100% { transform: translate(-40px, 70px) rotate(-720deg) scale(.9); opacity: 0; } }
+    .ss-shadow { position: absolute; left: 50%; top: 186px; width: 90px; height: 14px; margin-left: -45px;
+      background: rgba(0,0,0,.35); border-radius: 50%; filter: blur(2px); animation: ss-shadow 2.4s cubic-bezier(.3,.1,.3,1) infinite; }
+    @keyframes ss-shadow { 0%, 30% { transform: scale(.2); opacity: 0; } 62%, 80% { transform: scale(1); opacity: 1; }
+      74% { transform: scale(.7); } 100% { transform: translateX(-40px) scale(.9); opacity: 0; } }
+    .ss-whoosh { position: absolute; inset: 0; animation: ss-whoosh 2.4s linear infinite; }
+    .ss-whoosh i { position: absolute; height: 4px; border-radius: 4px; background: var(--c); opacity: .7; filter: brightness(1.5); }
+    .ss-whoosh i:nth-child(1) { width: 40px; right: 20px; top: 60px; }
+    .ss-whoosh i:nth-child(2) { width: 26px; right: 50px; top: 80px; }
+    .ss-whoosh i:nth-child(3) { width: 34px; right: 0; top: 100px; }
+    @keyframes ss-whoosh { 0%, 10% { opacity: 0; transform: translateX(0); } 25% { opacity: 1; } 45%, 100% { opacity: 0; transform: translateX(-120px); } }
+    .ss-name { position: absolute; bottom: -10px; width: 100%; text-align: center; direction: ltr; color: var(--ink, #f2f2f2);
+      font: 800 32px/1 "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -.5px; }
+    .ss-name b { color: var(--c); filter: brightness(1.4); }
+    .ss-bar { position: absolute; bottom: -40px; left: 25%; width: 50%; height: 6px; border-radius: 6px; background: #ffffff1a; overflow: hidden; }
+    .ss-bar span { display: block; height: 100%; width: 40%; background: var(--c); filter: brightness(1.4); border-radius: 6px; animation: ss-bar 1.4s ease-in-out infinite; }
+    @keyframes ss-bar { 0% { transform: translateX(-100%); } 100% { transform: translateX(260%); } }
+    .ss-shoe svg { width: 100%; height: auto; display: block; }
+    #status:not(.err) { display: none; }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&display=swap" rel="stylesheet">
 </head>
 <body>
   <canvas id="soundcraft_canvas"></canvas>
@@ -36,6 +69,28 @@
       });
     })();
   </script>
-  <div id="soundcraft_loading">Loading SoundCraft&hellip;</div>
+  <div id="soundcraft_loading"><div class="ss-scene"><link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet"><div class="ss-whoosh"><i></i><i></i><i></i></div><div class="ss-shadow"></div><div class="ss-shoe"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 145.399 150.728">
+  <defs>
+    <style>
+      .cls-1{fill:#eb1b3c}
+    </style>
+  </defs>
+  
+  <g id="Asset_16" data-name="Asset 16">
+    <g>
+      <g>
+        <g>
+          <path d="M81.059 150.728 C78.837 150.728 76.76 149.49 75.721 147.464 L53.539 104.173 L7.054 112.47 C4.512 112.923 1.961 111.698 0.727 109.426 C-0.506 107.155 -0.146 104.348 1.621 102.462 L37.25 64.417 C39.515 61.998 43.313 61.874 45.73 64.139 C48.149 66.404 48.274 70.201 46.008 72.619 L22.723 97.484 L55.8 91.58 C58.395 91.116 60.991 92.403 62.194 94.75 L77.735 125.079 L82.475 90.982 C82.832 88.411 84.801 86.362 87.356 85.903 L120.775 79.891 L90.262 64.362 C87.985 63.203 86.692 60.729 87.04 58.197 L91.766 23.796 L68.381 48.659 C66.55 50.605 63.653 51.107 61.275 49.888 L34.516 36.18 C31.567 34.669 30.401 31.053 31.912 28.104 C33.423 25.155 37.04 23.99 39.988 25.5 L62.731 37.152 L95.897 1.889 C97.686 -0.012 100.498 -0.538 102.854 0.586 C105.21 1.711 106.567 4.23 106.212 6.817 L99.509 55.603 L142.12 77.29 C144.416 78.459 145.71 80.964 145.334 83.513 C144.958 86.062 142.996 88.087 140.46 88.543 L93.761 96.943 L87.004 145.553 C86.644 148.146 84.644 150.206 82.063 150.643 C81.727 150.7 81.391 150.728 81.059 150.728 Z" class="cls-1"/>
+        </g>
+      </g>
+      <g>
+        <path d="M46.009 72.62 L10.38 110.665 L4.946 100.657 L55.801 91.58 C58.459 91.106 61.022 92.468 62.195 94.751 L86.401 141.991 L75.118 143.901 L82.475 90.982 C82.841 88.348 84.874 86.353 87.356 85.903 L138.336 76.732 L136.677 87.985 L90.263 64.362 C87.927 63.173 86.707 60.655 87.04 58.198 L94.324 5.184 L104.638 10.111 L68.381 48.66 C66.508 50.651 63.592 51.074 61.274 49.889 L34.516 36.18 L41.327 26.436 L78.894 66.827 C80.436 68.518 78.152 70.958 76.367 69.559 C76.367 69.559 33.178 35.245 33.178 35.245 C30.606 33.202 30.178 29.461 32.221 26.889 C34.119 24.49 37.46 23.998 39.988 25.5 C39.988 25.5 66.746 39.209 66.746 39.209 L59.64 40.438 L95.897 1.889 C99.865 -2.346 107.017 1.109 106.212 6.817 C106.212 6.817 98.928 59.831 98.928 59.831 L95.706 53.667 L142.12 77.29 C145.073 78.793 146.249 82.406 144.745 85.359 C143.865 87.088 142.231 88.213 140.46 88.543 L89.48 97.713 L94.361 92.634 L87.004 145.554 C86.215 151.322 78.341 152.621 75.721 147.463 C75.721 147.464 51.515 100.223 51.515 100.223 L57.909 103.393 L7.055 112.47 C3.792 113.053 0.676 110.88 0.094 107.618 C-0.25 105.693 0.388 103.795 1.621 102.462 L37.25 64.417 C42.897 58.804 51.23 66.646 46.009 72.62 Z" class="cls-1"/>
+      </g>
+      <g>
+        <path d="M55.399 81.259 C57.064 84.144 63.772 83.389 70.382 79.573 C76.991 75.757 80.999 70.325 79.333 67.441 C77.668 64.556 70.96 65.311 64.351 69.127 C57.741 72.943 53.733 78.375 55.399 81.259 Z" class="cls-1"/>
+      </g>
+    </g>
+  </g>
+</svg></div><div class="ss-name"><b lang="ar" dir="rtl" style="display:block;font-family:Lalezar,'IBM Plex Sans Arabic',sans-serif;font-weight:400;font-size:42px;line-height:1.1">ألحان</b><small style="display:block;font-size:13px;opacity:.6;margin-top:2px">al7an</small></div><div class="ss-bar"><span></span></div></div></div>
 </body>
 </html>

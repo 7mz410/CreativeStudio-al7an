@@ -7,13 +7,13 @@
   <key>CFBundleDevelopmentRegion</key>
   <string>en</string>
   <key>CFBundleDisplayName</key>
-  <string>SoundCraft</string>
+  <string>al7an</string>
   <key>CFBundleName</key>
-  <string>SoundCraft</string>
+  <string>al7an</string>
   <key>CFBundleExecutable</key>
   <string>SoundCraft</string>
   <key>CFBundleIdentifier</key>
-  <string>ai.storyteller.soundcraft</string>
+  <string>ps.creative.studio.al7an</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundlePackageType</key>
