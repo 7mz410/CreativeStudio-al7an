@@ -84,9 +84,9 @@ impl SoundApp {
 
 /// The File › Open Recent submenu.
 pub fn menu(app: &mut SoundApp, ui: &mut egui::Ui) {
-    ui.menu_button("Open Recent", |ui| {
+    ui.menu_button(tl!("Open Recent"), |ui| {
         if app.ui.recent_sessions.is_empty() {
-            ui.add_enabled(false, egui::Button::new("No Recent Sessions"));
+            ui.add_enabled(false, egui::Button::new(tl!("No Recent Sessions")));
             return;
         }
         let now = ui.ctx().input(|i| i.time);
@@ -101,7 +101,7 @@ pub fn menu(app: &mut SoundApp, ui: &mut egui::Ui) {
             }
         }
         ui.separator();
-        if ui.button("Clear Recent").clicked() {
+        if ui.button(tl!("Clear Recent")).clicked() {
             app.ui.recent_sessions.clear();
             app.recent_changed = true;
             ui.close();
