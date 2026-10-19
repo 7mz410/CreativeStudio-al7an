@@ -16,7 +16,7 @@ REPO = 'https://github.com/7mz410/CreativeStudio-al7an'
 SITE = 'https://studio.creative.ps'
 APP_SITE = 'https://al7an.studio.creative.ps'
 # Persisted names and legal lines; renaming them would lose settings or misstate copyright.
-KEEP = ('by the ArtCraft team', 'Application Support/SoundCraft', '/roaming/SoundCraft', 'the SoundCraft authors', 'SoundCraft contributors', 'SOUNDCRAFT_')
+KEEP = ('by the ArtCraft team', 'Application Support/SoundCraft', '/roaming/SoundCraft', 'SoundCraftData', 'the SoundCraft authors', 'SoundCraft contributors', 'SOUNDCRAFT_')
 # Persisted names whose literal is just "SoundCraft": eframe's storage name and the Windows settings folder.
 PROTECT = ('eframe::run_native(\n        "SoundCraft"', '.join("SoundCraft")')
 
@@ -25,15 +25,15 @@ PROTECT = ('eframe::run_native(\n        "SoundCraft"', '.join("SoundCraft")')
 RULES = [
     # About: our links and credit line, no Discord.
     ('crates/ui-egui/src/panels.rs', 'ui.label("An open-source digital audio workstation from the ArtCraft team.");',
-     'ui.label("An open-source digital audio workstation, part of the Creative Studio suite.\\nBuilt on SoundCraft by the ArtCraft team.");'),
+     'ui.label("An open-source digital audio workstation, part of the Creative Studio suite.\\nBuilt on SoundCraft by the ArtCraft team.");', 'part of the Creative Studio suite'),
     ('crates/ui-egui/src/panels.rs', 'ui.hyperlink_to("getartcraft.com/apps/soundcraft", "https://getartcraft.com/apps/soundcraft");',
-     f'ui.hyperlink_to("al7an.studio.creative.ps", "{APP_SITE}");'),
+     f'ui.hyperlink_to("al7an.studio.creative.ps", "{APP_SITE}");', 'al7an.studio.creative.ps'),
     ('crates/ui-egui/src/panels.rs', 'ui.hyperlink_to("Join us on Discord", "https://discord.gg/artcraft");',
-     f'ui.hyperlink_to("Source code: github.com/7mz410/CreativeStudio-al7an", "{REPO}");'),
+     f'ui.hyperlink_to("Source code: github.com/7mz410/CreativeStudio-al7an", "{REPO}");', 'CreativeStudio-al7an'),
     ('crates/clap-host/src/ffi.rs', 'url: c"https://github.com/storytold/soundcraft".as_ptr(),', f'url: c"{REPO}".as_ptr(),'),
     # Web page and packages.
     ('apps/soundcraft-web/index.html', '<title>SoundCraft</title>', f'<title>{NAME}</title>'),
-    ('apps/soundcraft-web/index.html', 'Loading SoundCraft&hellip;', f'Loading {NAME}&hellip;'),
+    ('apps/soundcraft-web/index.html', 'Loading SoundCraft&hellip;', f'Loading {NAME}&hellip;', 'ss-scene'),  # the splash replaced the text
     ('packaging/macos/Info.plist.in', '<string>ai.storyteller.soundcraft</string>', '<string>ps.creative.studio.al7an</string>'),
     ('packaging/windows/soundcraft.wxs', '<Property Id="ARPURLINFOABOUT" Value="https://getartcraft.com/apps/soundcraft" />', f'<Property Id="ARPURLINFOABOUT" Value="{APP_SITE}" />'),
     ('packaging/windows/soundcraft.wxs', '<Property Id="ARPURLUPDATEINFO" Value="https://getartcraft.com/apps/soundcraft" />', f'<Property Id="ARPURLUPDATEINFO" Value="{REPO}/releases" />'),
