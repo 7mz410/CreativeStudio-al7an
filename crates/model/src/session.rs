@@ -9,6 +9,8 @@ use soundcraft_time::{FrameRate, GridValue, Range, SampleRate, Samples, TempoMap
 
 /// Native session file extension.
 pub const SESSION_EXTENSION: &str = "scraft";
+/// Creative Studio saves sessions as `.al7an`; upstream's `.scraft` still opens.
+pub const STUDIO_EXTENSION: &str = "al7an";
 
 /// `EditState::values` key holding the feet+frames reading of sample 0, in frames.
 pub const FEET_FRAMES_START: &str = "feet_frames.start";

@@ -29,6 +29,8 @@ and, at runtime, the operating system's own UI fonts when available (never redis
 
 | Path | Author | Source | License |
 |---|---|---|---|
+| `assets/app-icon/al7an-document.svg` | Hamza Abu Ayyash (Creative Studio) | the mzika icon (`file icons/mzika.svg`, the former name of this app) used as the document icon | MIT OR Apache-2.0 | Document icon of `.al7an` sessions |
+| `assets/app-icon/al7an-document.icns` | Hamza Abu Ayyash (Creative Studio) | `assets/app-icon/al7an-document.svg` rendered with rsvg-convert, packed with iconutil | MIT OR Apache-2.0 | Document icon of `.al7an` sessions |
 | `assets/app-icon/icon.svg` | Hamza Abu Ayyash (Creative Studio) | the al7an star (`docs/studio/al7an.svg`) on a navy tile, rendered by `packaging/icons.sh` | MIT OR Apache-2.0 | App icon (see `assets/app-icon/README.md`) |
 | `packaging/macos/dmg/` (all files) | @XusBadia | original (macOS DMG window background and layout, from the app icon; see `packaging/macos/dmg/README.md`) | MIT OR Apache-2.0 |
 | `assets/app-icon/soundcraft-1024.png` | Hamza Abu Ayyash (Creative Studio) | the al7an star (`docs/studio/al7an.svg`) on a navy tile, rendered by `packaging/icons.sh` | MIT OR Apache-2.0 | App icon (see `assets/app-icon/README.md`) |

@@ -466,7 +466,7 @@ mod tests {
             let p = entry.path();
             if p.is_dir() {
                 remove_media(&p);
-            } else if p.extension().is_some_and(|x| x != "scraft") {
+            } else if p.extension().is_some_and(|x| x != "scraft" && x != "al7an") {
                 let _ = std::fs::remove_file(&p);
             }
         }
@@ -654,6 +654,21 @@ mod tests {
         let a = std::fs::read(&files[0]).unwrap();
         let b = std::fs::read(&files[1]).unwrap();
         assert_ne!(a, b, "the second consolidation replaced the first file");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn sessions_save_as_al7an_and_scraft_still_opens() {
+        let (mut e, _) = tone_engine();
+        let dir = std::env::temp_dir().join(format!("sc-al7an-ext-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        e.execute("session.save_as", &json!({"path": dir.join("Plain").to_string_lossy()})).unwrap();
+        assert!(dir.join("Plain.al7an").is_file(), "a name without an extension saves as .al7an");
+        let old = dir.join("Old.scraft");
+        std::fs::copy(dir.join("Plain.al7an"), &old).unwrap();
+        let mut opened = Engine::default();
+        opened.execute("session.open", &json!({"path": old.to_string_lossy()})).unwrap();
         let _ = std::fs::remove_dir_all(&dir);
     }
 
