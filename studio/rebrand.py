@@ -110,6 +110,10 @@ pub const STUDIO_EXTENSION: &str = "al7an";'''),
         </ProgId>
         <!-- Audio and MIDI files''',
      '''          </Extension>
+        </ProgId>
+        <!-- .al7an: al7an's own session extension. Its own ProgId, since two Extensions with an "open"
+             Verb under one ProgId write the same shell\open\command key (WIX0091). -->
+        <ProgId Id="Al7an.Session" Description="al7an Session" Icon="SoundcraftExe" IconIndex="0">
           <Extension Id="al7an" ContentType="application/x-al7an-session">
             <Verb Id="open" Command="Open" TargetFile="SoundcraftExe" Argument="&quot;%1&quot;" />
           </Extension>
