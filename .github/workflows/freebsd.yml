@@ -30,3 +30,7 @@ jobs:
   freebsd:
     # Intentionally tracked at @main (not SHA-pinned) so org-wide CI improvements, security fixes, and build optimizations propagate without PR churn across all craftapp repos.
     uses: storytold/craft-common-actions/.github/workflows/freebsd.yml@main
+    # al7an: x86_64 only. The shared workflow's aarch64 job builds under QEMU emulation and runs
+    # past its 300-minute timeout every night, so it never reports a result.
+    with:
+      architectures: '["x86_64"]'
