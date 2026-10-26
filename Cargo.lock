@@ -1194,7 +1194,6 @@ dependencies = [
 [[package]]
 name = "egui"
 version = "0.37.0"
-source = "git+https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc799681571963842f95b55a6b68431b15a"
 dependencies = [
  "accesskit",
  "ahash",
@@ -4173,6 +4172,7 @@ dependencies = [
  "soundcraft-video",
  "soundcraft-vst3-host",
  "toml",
+ "unicode-bidi",
  "web-time",
  "zbus",
 ]

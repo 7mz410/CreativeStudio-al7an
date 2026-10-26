@@ -972,9 +972,9 @@ impl SoundApp {
         self.panic_rev = self.engine.revision;
         let saved = self.engine.is_dirty() && self.write_autosave();
         self.ui.status = if saved {
-            "SoundCraft hit an internal error (see the log). Your changes were autosaved: save them, then restart SoundCraft.".into()
+            "al7an hit an internal error (see the log). Your changes were autosaved: save them, then restart al7an.".into()
         } else {
-            "SoundCraft hit an internal error (see the log). Restart SoundCraft to be safe.".into()
+            "al7an hit an internal error (see the log). Restart al7an to be safe.".into()
         };
     }
 
@@ -1076,7 +1076,7 @@ impl SoundApp {
         let (cause, then) = match trouble {
             OutputTrouble::Bug => (
                 "the audio engine hit an internal error (see the log)".to_string(),
-                "Use Reconnect audio device in Setup › Playback Engine, or restart SoundCraft.",
+                "Use Reconnect audio device in Setup › Playback Engine, or restart al7an.",
             ),
             OutputTrouble::Gone => {
                 (format!("“{name}” is unavailable"), "Check the audio device, then use Reconnect audio device in Setup › Playback Engine.")
