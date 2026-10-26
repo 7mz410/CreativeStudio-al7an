@@ -113,15 +113,17 @@ fn recorded_at(s: &Session, time_reference: u64) -> Samples {
     i64::try_from(time_reference).unwrap_or(0).saturating_sub(s.timecode_start)
 }
 
+/// One editable Spot field: accept the entered position when it parses and lies in `-MAX_POSITION..=MAX_POSITION`,
+/// or show the formatted value when read-only.
 fn spot_field_row(ui: &mut Ui, s: &Session, d: &mut Spot, i: usize, label: &str) {
     let show = |at: Samples, f: TimeFormat| s.format_position(at, f);
-    ui.label(label);
+    let lab = ui.label(label);
     if d.editable(i) {
-        let id = Id::new(("spot_field", i));
+        let id = Id::unique(("spot_field", i));
         if !ui.memory(|m| m.has_focus(id)) {
             d.text[i] = show(d.value(i), d.format);
         }
-        let r = ui.add(TextEdit::singleline(&mut d.text[i]).id(id).font(mono(13.0)).desired_width(150.0));
+        let r = ui.add(TextEdit::singleline(&mut d.text[i]).id(id).font(mono(13.0)).desired_width(150.0)).labelled_by(lab.id);
         if r.changed()
             && let Ok(v) = s.parse_position(&d.text[i], d.format)
             && (-MAX_POSITION..=MAX_POSITION).contains(&v)
@@ -139,10 +141,10 @@ fn spot_field_row(ui: &mut Ui, s: &Session, d: &mut Spot, i: usize, label: &str)
 }
 
 fn original_time_stamp_row(ui: &mut Ui, s: &Session, d: &mut Spot, at: Samples) {
-    ui.label(tl!("Original Time Stamp"));
+    ui.label("Original Time Stamp");
     ui.horizontal(|ui| {
         ui.label(RichText::new(s.format_position(at, TimeFormat::Timecode)).font(mono(13.0)));
-        if ui.button(tl!("Use")).on_hover_text(tl!("Spot to where it was recorded")).clicked() {
+        if ui.button("Use").on_hover_text("Spot to where it was recorded").clicked() {
             d.start = at;
         }
     });
@@ -152,12 +154,13 @@ fn original_time_stamp_row(ui: &mut Ui, s: &Session, d: &mut Spot, at: Samples) 
 /// The dialog's fields; the caller adds OK and Cancel.
 pub fn fields(ui: &mut Ui, s: &Session, d: &mut Spot) {
     egui::Grid::new("spot").num_columns(2).spacing(vec2(10.0, 6.0)).show(ui, |ui| {
-        ui.label(tl!("Time Scale"));
-        egui::ComboBox::from_id_salt("spot_scale").selected_text(d.format.label()).show_ui(ui, |ui| {
+        let scale = ui.label("Time Scale");
+        let time_scale = egui::ComboBox::from_id_salt("spot_scale").selected_text(d.format.label()).show_ui(ui, |ui| {
             for f in TimeFormat::ALL {
                 ui.selectable_value(&mut d.format, f, f.label());
             }
         });
+        time_scale.response.labelled_by(scale.id);
         ui.end_row();
         for (i, label) in FIELDS.into_iter().enumerate() {
             if i == 1 && matches!(d.target, Target::Trim { .. }) {
@@ -165,7 +168,7 @@ pub fn fields(ui: &mut Ui, s: &Session, d: &mut Spot) {
             }
             spot_field_row(ui, s, d, i, label);
         }
-        ui.label(tl!("Duration"));
+        ui.label("Duration");
         ui.label(RichText::new(format_length(d.start, d.len, d.format, s.sample_rate, &s.tempo, s.frame_rate)).font(mono(13.0)));
         ui.end_row();
         if let Some(at) = d.stamp {
