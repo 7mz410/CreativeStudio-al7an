@@ -229,21 +229,21 @@ pub fn menu_bar(app: &mut SoundApp, ui: &mut egui::Ui) {
         ui,
         |ui| {
             egui::MenuBar::new().ui(ui, |ui| {
-                ui.menu_button("al7an", |ui| {
-                    if ui.button("About al7an").clicked() {
+                ui.menu_button(tl!("al7an"), |ui| {
+                    if ui.button(tl!("About al7an")).clicked() {
                         app.ui.show_about = true;
                     }
                     if ui.button("Check for Updates…").clicked() {
                         let _ = app.run("app.checkForUpdates", json!({}));
                     }
-                    if ui.button("Session Info").clicked() {
+                    if ui.button(tl!("Session Info")).clicked() {
                         app.ui.show_session_info = true;
                     }
-                    if ui.button("Session Audio Health").clicked() {
+                    if ui.button(tl!("Session Audio Health")).clicked() {
                         let _ = app.run("window.audio_health", json!({"value": true}));
                     }
                     ui.separator();
-                    if ui.button("Quit").clicked() {
+                    if ui.button(tl!("Quit")).clicked() {
                         let _ = crate::dialogs::run_or_ask(app, "app.quit", json!({}));
                     }
                 });
@@ -261,14 +261,14 @@ pub fn menu_bar(app: &mut SoundApp, ui: &mut egui::Ui) {
                         }
                         if root.label == "AudioSuite" {
                             ui.separator();
-                            ui.label(egui::RichText::new("Processes selected clips offline").small().color(t.text_dim));
+                            ui.label(egui::RichText::new(tl!("Processes selected clips offline")).small().color(t.text_dim));
                         }
                         if root.label == "Window" {
                             ui.separator();
                             let mut separate = app.ui.mix_separate;
                             if ui
-                                .checkbox(&mut separate, "Mix in Separate Window")
-                                .on_hover_text("Show Edit and Mix at once, e.g. one per monitor")
+                                .checkbox(&mut separate, tl!("Mix in Separate Window"))
+                                .on_hover_text(tl!("Show Edit and Mix at once, e.g. one per monitor"))
                                 .changed()
                             {
                                 let _ = run_ui_command(app, "window.mix_separate", &json!({"value": separate}));
@@ -461,8 +461,8 @@ pub fn shortcut_for(id: &str) -> Option<&'static str> {
 pub fn live_label(app: &SoundApp, id: Option<&str>) -> Option<String> {
     let e = &app.engine;
     match id? {
-        "edit.undo" => Some(e.undo_label().map_or_else(|| "Can't Undo".into(), |l| format!("Undo {l}"))),
-        "edit.redo" => Some(e.redo_label().map_or_else(|| "Can't Redo".into(), |l| format!("Redo {l}"))),
+        "edit.undo" => Some(e.undo_label().map_or_else(|| tl!("Can't Undo").into(), |l| format!("{} {l}", tl!("Undo")))),
+        "edit.redo" => Some(e.redo_label().map_or_else(|| tl!("Can't Redo").into(), |l| format!("{} {l}", tl!("Redo")))),
         _ => None,
     }
 }
